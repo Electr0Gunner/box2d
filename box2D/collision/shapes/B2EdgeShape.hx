@@ -34,6 +34,25 @@ import box2D.common.math.B2Vec2;
  */
 class B2EdgeShape extends B2Shape
 {
+
+	override public function copy():B2Shape
+	{
+		var s:B2Shape = new B2EdgeShape(m_v1, m_v2);
+		s.set(this);
+		return s;
+	}
+
+	override public function set(other:B2Shape):Void
+	{
+		super.set(other);
+		if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (other, B2EdgeShape))
+		{
+			var other2:B2EdgeShape = cast(other, B2EdgeShape);
+			m_nextEdge = other2.m_nextEdge;
+			m_prevEdge = other2.m_prevEdge;
+		}
+	}
+
 	/**
 	 * Returns false. Edges cannot contain points. 
 	 */
