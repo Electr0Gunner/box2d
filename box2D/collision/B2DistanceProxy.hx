@@ -18,6 +18,7 @@
 
 package box2D.collision;
 
+import box2D.collision.shapes.B2EdgeShape;
 import box2D.collision.shapes.B2CircleShape;
 import box2D.collision.shapes.B2PolygonShape;
 import box2D.collision.shapes.B2Shape;
@@ -55,7 +56,17 @@ class B2DistanceProxy
 					m_count = polygon.m_vertexCount;
 					m_radius = polygon.m_radius;
 				}
+			case B2ShapeType.EDGE_SHAPE:
+				{
+					var edge:B2EdgeShape = cast(shape, B2EdgeShape);
+					m_vertices = new Array<B2Vec2>();
+					m_vertices[0] = edge.getVertex1();
+					m_vertices[1] = edge.getVertex2();
+					m_count = 2;
+					m_radius = edge.m_radius;
+				}
 
+			
 			default:
 				B2Settings.b2Assert(false);
 		}
