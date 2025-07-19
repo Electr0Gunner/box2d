@@ -18,6 +18,7 @@
 
 package box2D.dynamics.contacts;
 
+import box2D.collision.B2Collision;
 import box2D.collision.B2Manifold;
 import box2D.collision.shapes.B2EdgeShape;
 import box2D.collision.shapes.B2PolygonShape;
@@ -59,6 +60,14 @@ class B2PolyAndEdgeContact extends B2Contact
 
 	private function b2CollidePolyAndEdge(manifold:B2Manifold, polygon:B2PolygonShape, xf1:B2Transform, edge:B2EdgeShape, xf2:B2Transform):Void
 	{
+		// WARNING: HACK
+		// TODO: REPLACE
+
+		var polygonB:B2PolygonShape = new B2PolygonShape();
+		polygonB.setAsEdge(edge.getVertex1(), edge.getVertex2());
+
+		B2Collision.collidePolygons(manifold, polygon, xf1, polygonB, xf2);
+
 		// TODO_BORIS
 		/*
 			manifold.pointCount = 0;
